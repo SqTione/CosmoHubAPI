@@ -4,10 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Laravel\Passport\HasApiTokens;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class User extends Model
+class User extends Authenticatable  // Меняем Model на Authenticatable для работы
 {
-    use HasFactory;
+    use HasFactory, HasApiTokens;   // Подключаем для использования Laravel Passport
 
     // Добавляем возможность заполнять поля
     protected $fillable = [
