@@ -15,4 +15,9 @@ class SpaceFlight extends Model
         'launch_date',
         'seats_available',
     ];
+
+    // Связь с моделью Booking
+    public function bookings() {
+        return $this->hasMany(Booking::class);
+    }
 }

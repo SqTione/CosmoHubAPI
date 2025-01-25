@@ -30,7 +30,7 @@ class LoginController extends Controller
 
         // Авторизация пользователя
         if (Auth::attempt([
-            'email' => $request->email, 
+            'email' => $request->email,
             'password' => $request->password
         ])) {
             $user = Auth::user();
@@ -63,25 +63,26 @@ class LoginController extends Controller
         ]);
     }
 
-    // TODO: Похоже, функция выхода не работает. Всегда ошибка "User is not authorized"
     // Функция логаута
     public function logout(Request $request) {
         $user = Auth::user();
-    
+
         if ($user) {
-            $user->api_token = null; 
-            $user->save();
+            // Удаляем все токены пользователя
+            $user->tokens->each(function ($token) {
+                $token->delete();
+            });
+
+            return response()->noContent(); // Возвращаем пустой ответ
         } else {
-            // Если пользователь не аутентифицирован, возвращаем ошибку (в задании такого нет)
+            // Если пользователь не аутентифицирован
             return response()->json([
                 'error' => [
                     'code' => 401,
-                    'message' => 'Unathorized',
-                    'errors' => 'User is not authorized'
+                    'message' => 'Unauthorized',
+                    'errors' => ['User is not authorized']
                 ]
-            ]);
+            ], 401);
         }
-    
-        return response()->noContent(); // Возвращаем пустой ответ
     }
 }

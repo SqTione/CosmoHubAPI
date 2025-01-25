@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\BookingController;
 
 // --- Вход, регистрация и выход ---
 // Маршрут регистрации пользователя
@@ -17,7 +18,7 @@ Route::post('/registration', [UserController::class, 'store']);
 Route::post('/authorization', [LoginController::class, 'login'])->name('login');
 
 // Маршрут выхода из аккаунта
-Route::get('/logout', [LoginController::class, 'logout']);
+Route::middleware('auth:api')->get('/logout', [LoginController::class, 'logout']);
 
 // --- Полёты ---
 // Маршрут получения данных о полёте Гагарина
@@ -45,3 +46,6 @@ Route::get('/space-flights', [SpaceFlightController::class, 'index']);
 
 // Создание нового космического полёта
 Route::post('/space-flights', [SpaceFlightController::class, 'store']);
+
+// Регистрация на космический рейс
+Route::middleware('auth:api')->post('/book-flight', [BookingController::class, 'store']);

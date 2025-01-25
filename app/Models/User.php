@@ -20,4 +20,9 @@ class User extends Authenticatable  // Меняем Model на Authenticatable �
         'password',
         'birth_date',
     ];
+
+    // Связь с моделью Booking
+    public function bookings() {
+        return $this->hasMany(Booking::class);
+    }
 }
