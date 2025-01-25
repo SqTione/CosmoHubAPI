@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\BookingController;
+use App\Http\Controllers\LunarWatermarkController;
 
 // --- Вход, регистрация и выход ---
 Route::group([], function () {
@@ -62,3 +63,6 @@ Route::post('/space-flights', [SpaceFlightController::class, 'store']);
 
 // Регистрация на космический рейс
 Route::middleware('auth:api')->post('/book-flight', [BookingController::class, 'store']);
+
+// Создание изображения с водяным знаком на Луне
+Route::post('/lunar-watermark', [LunarWatermarkController::class, 'store']);
