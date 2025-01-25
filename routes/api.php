@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\FlightController;
 use App\Http\Controllers\GagarinFlightController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -17,3 +18,6 @@ Route::get('/logout', [LoginController::class, 'logout']);
 
 // Маршрут получения данных о полёте Гагарина
 Route::get('/api/gagarin-flight', [GagarInFlightController::class, 'index']);
+
+// Маршрут получения данных о полётах
+Route::get('/flight', [FlightController::class, 'index']);
