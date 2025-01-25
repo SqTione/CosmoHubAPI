@@ -1,0 +1,30 @@
+<?php
+
+namespace Database\Seeders;
+
+use App\Models\LunarMission;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Illuminate\Database\Seeder;
+
+class LunarMissionSeeder extends Seeder
+{
+    /**
+     * Run the database seeds.
+     */
+    public function run(): void
+    {
+        LunarMission::create([
+            'name' => 'Аполлон-11',
+            'launch_date' => '1969-07-16',
+            'launch_site_name' => 'Космический центр имени Кеннеди',
+            'launch_latitude' => '28.5721000',
+            'launch_longitude' => '-80.6480000',
+            'landing_date' => '1969-07-20',
+            'landing_site_name' => 'Море спокойствия',
+            'landing_latitude' => '0.6740000',
+            'landing_longitude' => '23.4720000',
+            'command_module' => 'Колумбия',
+            'lunar_module' => 'Орел',
+        ]);
+    }
+}

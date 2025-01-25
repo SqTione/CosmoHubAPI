@@ -36,7 +36,7 @@ class FlightController extends Controller
             ];
         });
 
-        // Возвращаем ответ серверва
-        return response()->json(['data' => $data],200);
+        // Возвращаем ответ сервера
+        return response()->json($data,200);
     }
 }
