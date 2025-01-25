@@ -3,6 +3,7 @@
 use App\Http\Controllers\FlightController;
 use App\Http\Controllers\GagarinFlightController;
 use App\Http\Controllers\LunarMissionController;
+use App\Http\Controllers\SpaceFlightController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
@@ -37,3 +38,10 @@ Route::patch('/lunar-missions/{mission}', [LunarMissionController::class, 'updat
 
 //Маршрут удаления лунной миссии
 Route::delete('/lunar-missions/{mission}', [LunarMissionController::class, 'destroy']);
+
+// --- Космические полёты ---
+// Получение всех космических полётов
+Route::get('/space-flights', [SpaceFlightController::class, 'index']);
+
+// Создание нового космического полёта
+Route::post('/space-flights', [SpaceFlightController::class, 'store']);
