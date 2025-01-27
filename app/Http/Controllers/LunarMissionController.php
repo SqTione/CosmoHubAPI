@@ -154,4 +154,49 @@ class LunarMissionController extends Controller
             ],
         ], 204);
     }
+
+    // Функция поиска
+    public function search(Request $request)
+    {
+        // Получаем значение параметра query из GET-запроса
+        $query = $request->query('query');
+
+        // Выполняем поиск по миссиям и членам экипажа
+        $missions = LunarMission::with(['launchSite', 'landingSite', 'crewMembers'])
+            ->where('name', 'like', '%' . $query . '%')  // Поиск по имени миссии
+            ->orWhereHas('launchSite', function ($queryBuilder) use ($query) {
+                // Поиск по имени места старта
+                $queryBuilder->where('name', 'like', '%' . $query . '%');
+            })
+            ->orWhereHas('landingSite', function ($queryBuilder) use ($query) {
+                // Поиск по имени места посадки
+                $queryBuilder->where('name', 'like', '%' . $query . '%');
+            })
+            ->orWhereHas('crewMembers', function ($queryBuilder) use ($query) {
+                // Поиск по имени члена экипажа
+                $queryBuilder->where('name', 'like', '%' . $query . '%');
+            })
+            ->get();
+
+        // Формируем данные для вывода
+        $data = $missions->map(function ($mission) {
+            return [
+                'type' => 'Миссия',
+                'name' => $mission->name,
+                'launch_date' => $mission->launch_date,
+                'landing_date' => $mission->landing_date,
+                'crew' => $mission->crewMembers->map(function ($member) {
+                    return [
+                        'name' => $member->name,
+                        'role' => $member->role,
+                    ];
+                }),
+                'landing_site' => $mission->landingSite->name ?? null,
+            ];
+        });
+
+        // Возвращаем результат в формате JSON
+        return response()->json(['data' => $data], 200);
+    }
+
 }

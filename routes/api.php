@@ -58,6 +58,9 @@ Route::group([], function () {
     Route::middleware('auth:api')->post('/book-flight', [BookingController::class, 'store']);
 });
 
+// Поиск по миссиям и пилотам
+Route::middleware('auth:api')->get('/search', [LunarMissionController::class, 'search']);
+
 // Создание нового космического полёта
 Route::middleware('auth:api')->post('/space-flights', [SpaceFlightController::class, 'store']);
 
