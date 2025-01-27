@@ -25,44 +25,44 @@ Route::group([], function () {
 // --- Полёты ---
 Route::group([], function () {
     // Получение данных о полёте Гагарина
-    Route::get('/api/gagarin-flight', [GagarInFlightController::class, 'index']);
+    Route::middleware('auth:api')->get('/api/gagarin-flight', [GagarInFlightController::class, 'index']);
 
     // Получение данных о полётах
-    Route::get('/flight', [FlightController::class, 'index']);
+    Route::middleware('auth:api')->get('/flight', [FlightController::class, 'index']);
 });
 
 // --- Лунные миссии ---
 Route::group([], function () {
     // Получение всех лунных миссий
-    Route::get('/lunar-missions', [LunarMissionController::class, 'index']);
+    Route::middleware('auth:api')->get('/lunar-missions', [LunarMissionController::class, 'index']);
 
     // Создание новой лунной миссии
-    Route::post('/lunar-missions', [LunarMissionController::class, 'store']);
+    Route::middleware('auth:api')->post('/lunar-missions', [LunarMissionController::class, 'store']);
 
     // Обновление лунной миссии
-    Route::patch('/lunar-missions/{mission}', [LunarMissionController::class, 'update']);
+    Route::middleware('auth:api')->patch('/lunar-missions/{mission}', [LunarMissionController::class, 'update']);
 
     // Удаление лунной миссии
-    Route::delete('/lunar-missions/{mission}', [LunarMissionController::class, 'destroy']);
+    Route::middleware('auth:api')->delete('/lunar-missions/{mission}', [LunarMissionController::class, 'destroy']);
 });
 
 // --- Космические полёты ---
 Route::group([], function () {
     // Получение всех космических полётов
-    Route::get('/space-flights', [SpaceFlightController::class, 'index']);
+    Route::middleware('auth:api')->get('/space-flights', [SpaceFlightController::class, 'index']);
 
     // Создание нового космического полёта
-    Route::post('/space-flights', [SpaceFlightController::class, 'store']);
+    Route::middleware('auth:api')->post('/space-flights', [SpaceFlightController::class, 'store']);
 
     // Регистрация на космический рейс
     Route::middleware('auth:api')->post('/book-flight', [BookingController::class, 'store']);
 });
 
 // Создание нового космического полёта
-Route::post('/space-flights', [SpaceFlightController::class, 'store']);
+Route::middleware('auth:api')->post('/space-flights', [SpaceFlightController::class, 'store']);
 
 // Регистрация на космический рейс
 Route::middleware('auth:api')->post('/book-flight', [BookingController::class, 'store']);
 
 // Создание изображения с водяным знаком на Луне
-Route::post('/lunar-watermark', [LunarWatermarkController::class, 'store']);
+Route::middleware('auth:api')->post('/lunar-watermark', [LunarWatermarkController::class, 'store']);
