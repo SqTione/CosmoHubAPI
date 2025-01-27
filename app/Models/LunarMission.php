@@ -12,14 +12,23 @@ class LunarMission extends Model
     protected $fillable = [
         'name',
         'launch_date',
-        'launch_site_name',
-        'launch_latitude',
-        'launch_longitude',
         'landing_date',
-        'landing_site_name',
-        'landing_latitude',
-        'landing_longitude',
         'command_module',
-        'lunar_module',
+        'lunar_module'
     ];
+
+    public function launchSite()
+    {
+        return $this->hasOne(LaunchSite::class);
+    }
+
+    public function landingSite()
+    {
+        return $this->hasOne(LandingSite::class);
+    }
+
+    public function crewMembers()
+    {
+        return $this->hasMany(CrewMember::class);
+    }
 }
